@@ -1,10 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Store} from '@ngrx/store';
 
 import * as L from 'leaflet';
 import * as Utils from '../utils/configuration';
-import * as fromApp from '../store/app.reducer';
-import * as MapActions from '../map/store/map.actions';
 
 @Component({
   selector: 'app-map',
@@ -30,7 +27,7 @@ export class MapComponent implements OnInit {
     })
   };
 
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor() {
   }
 
   handleError(error: any): void {
@@ -39,9 +36,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(
-      MapActions.getInstitutions()
-    );
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         this.setGeoLocation.bind(this),

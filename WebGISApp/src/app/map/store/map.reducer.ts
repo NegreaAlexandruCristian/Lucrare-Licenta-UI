@@ -1,14 +1,19 @@
 import {Institution} from '../../models/Institution.model';
 import {Action, createReducer, on} from '@ngrx/store';
 import * as MapActions from './map.actions';
+import {Point} from '../../models/Point.model';
 
 export interface State {
   institutions: Institution[];
+  institutionType: string;
+  point: Point;
 }
 
 
 const initialState: State = {
-  institutions: []
+  institutions: [],
+  institutionType: '',
+  point: new Point('', 0, 0, 0)
 };
 
 
@@ -19,7 +24,9 @@ const _mapReducer = createReducer(
     MapActions.setInstitutions,
     (state, action) => ({
       ...state,
-      institutions: [...action.institutions]
+      institutions: [...action.institutions],
+      institutionType: action.institutionType,
+      point: action.point
     })
   )
 );

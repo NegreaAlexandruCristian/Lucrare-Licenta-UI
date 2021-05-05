@@ -1,0 +1,18 @@
+.row {
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.border-class {
+  border: 3px green solid;
+  border-radius: 20px;
+  margin: 0 40px 40px 40px;
+  padding: 20px;
+}
+
+label {
+  color: green;
+  font-size: 15px;
+  padding-top: 20px;
+  padding-left: 50px;
+}

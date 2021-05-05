@@ -1,12 +1,19 @@
 <div class="row">
   <div class="col">
     <div ngbDropdown class="d-inline-block">
-      <button class="btn btn-outline-success btn-lg" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+      <button class="btn btn-outline-success btn-lg" id="dropdownBasic1" ngbDropdownToggle>Which type of location would
+        you like?
+      </button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button class="btn-lg" ngbDropdownItem (click)="getPublicLocations()">All Public Locations</button>
-        <button class="btn-lg" ngbDropdownItem>All Medical Locations</button>
-        <button class="btn-lg" ngbDropdownItem>All Transport Locations</button>
+        <button (click)="getInstitutions('public')" class="btn-lg" ngbDropdownItem>All Public Locations</button>
+        <button (click)="getInstitutions('medical')" class="btn-lg" ngbDropdownItem>All Medical Locations</button>
+        <button (click)="getInstitutions('transport')" class="btn-lg" ngbDropdownItem>All Transport Locations</button>
       </div>
+    </div>
+  </div>
+  <div class="col text-right zone-search">
+    <div class="d-inline-block">
+      <button (click)="enableZoneSearch()" class="btn btn-outline-success btn-lg">Zone Search</button>
     </div>
   </div>
 </div>

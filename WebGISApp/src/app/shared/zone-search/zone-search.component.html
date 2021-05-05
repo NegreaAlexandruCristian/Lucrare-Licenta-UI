@@ -1,0 +1,18 @@
+<div class="row align-content-center">
+  <label>Zone Search Form</label>
+  <form class="form-inline border-class">
+    <div class="col">
+      <div class="d-inline-block" ngbDropdown>
+        <button class="btn btn-outline-success btn-lg" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+        <div aria-labelledby="dropdownBasic1" ngbDropdownMenu>
+          <button class="btn-lg" ngbDropdownItem>All Public Locations</button>
+          <button class="btn-lg" ngbDropdownItem>All Medical Locations</button>
+          <button class="btn-lg" ngbDropdownItem>All Transport Locations</button>
+          <button class="btn-lg" ngbDropdownItem>All Locations</button>
+        </div>
+      </div>
+    </div>
+    <input class="form-control mb-2 mr-sm-2" id="radius" placeholder="Enter radius.." type="number">
+    <button class="btn  btn-outline-success mb-2" type="submit">Submit</button>
+  </form>
+</div>

@@ -1,5 +1,10 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Store} from '@ngrx/store';
+
 import * as L from 'leaflet';
+import * as Utils from '../utils/configuration';
+import * as fromApp from '../store/app.reducer';
+import * as MapActions from '../map/store/map.actions';
 
 @Component({
   selector: 'app-map',
@@ -9,7 +14,7 @@ import * as L from 'leaflet';
 })
 export class MapComponent implements OnInit {
 
-  private map: any;
+  errorMessage = '';
 
   private iconRetinaUrl = 'assets/marker-icon-2x.png';
   private iconUrl = 'assets/marker-icon.png';
@@ -25,19 +30,30 @@ export class MapComponent implements OnInit {
     })
   };
 
-  constructor() {
+  constructor(private store: Store<fromApp.AppState>) {
+  }
+
+  handleError(error: any): void {
+    this.errorMessage = error.message;
+    console.log(error);
   }
 
   ngOnInit(): void {
+    this.store.dispatch(
+      MapActions.getInstitutions()
+    );
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setGeoLocation.bind(this));
+      navigator.geolocation.getCurrentPosition(
+        this.setGeoLocation.bind(this),
+        this.handleError.bind(this)
+      );
     }
   }
 
   setGeoLocation(position: { coords: { latitude: any; longitude: any } }): void {
-    const {coords: {latitude, longitude},} = position;
+    const {coords: {latitude, longitude}, } = position;
 
-    const map = L.map('map').setView([latitude, longitude], 13);
+    const map = L.map('map').setView([latitude, longitude], Utils.MAP_ZOOM_LEVEL);
 
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors'

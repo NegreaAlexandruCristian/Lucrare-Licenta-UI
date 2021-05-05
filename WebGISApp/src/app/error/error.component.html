@@ -1,0 +1,4 @@
+<div [classList]="hidden ? 'fade alert' : 'alert'">
+  <span class="close-btn" (click)="closeError()">&times;</span>
+  <span class="error-message">{{errorMessage}}</span>
+</div>

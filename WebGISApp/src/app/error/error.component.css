@@ -1,0 +1,41 @@
+/* The alert message box */
+.alert {
+  flex: 1;
+  color: white;
+  padding: 20px;
+  background: red;
+  display: inline-block;
+  width: 100%;
+  margin-left: 100%;
+  margin-top: 80%;
+  border: 10px solid red;
+  border-radius: 20px;
+}
+
+/* The alert message text */
+.error-message {
+  font-size: 25px;
+  justify-content: center;
+}
+
+/* The close button */
+.close-btn {
+  margin-left: 15px;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.9s;
+}
+
+.close-btn:hover {
+  color: black;
+}
+
+.fade {
+  transition: opacity 0.6s ease-out;
+  opacity: 0;
+}

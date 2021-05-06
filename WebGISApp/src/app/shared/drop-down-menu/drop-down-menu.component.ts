@@ -27,16 +27,10 @@ export class DropDownMenuComponent implements OnInit {
     this.store.dispatch(
       MapActions.getInstitutions({institutionType: type})
     );
-    this.store.select('institutions').subscribe(
-      data => {
-        console.log(data.institutionType);
-        console.log(data.institutions);
-      }
-    );
   }
 
   enableZoneSearch(): void {
-    this.zoneSearch = true;
+    this.zoneSearch = !this.zoneSearch;
     this.zoneSearchService.activatedEmitter.next(this.zoneSearch);
   }
 }

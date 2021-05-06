@@ -9,13 +9,11 @@ export interface State {
   point: Point;
 }
 
-
 const initialState: State = {
   institutions: [],
   institutionType: '',
-  point: new Point('', 0, 0, 0)
+  point: new Point('', 0, 0, 0),
 };
-
 
 // tslint:disable-next-line:variable-name
 const _mapReducer = createReducer(
@@ -26,7 +24,7 @@ const _mapReducer = createReducer(
       ...state,
       institutions: [...action.institutions],
       institutionType: action.institutionType,
-      point: action.point
+      point: action.point,
     })
   )
 );

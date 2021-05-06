@@ -82,7 +82,7 @@ export class MapEffects {
           {
             institutions,
             institutionType: getInstitutionType(institutions[0].code),
-            point: this.point
+            point: this.point,
           });
       })
     )

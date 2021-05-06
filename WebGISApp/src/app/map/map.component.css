@@ -1,3 +1,11 @@
+.current-location {
+  position: absolute;
+  top: 86%;
+  right: 40px;
+  padding: 20px;
+  z-index: 400;
+}
+
 #map {
   flex: 1;
   height: 100%;

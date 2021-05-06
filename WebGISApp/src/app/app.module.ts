@@ -17,6 +17,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import * as fromMap from '../app/map/store/map.reducer';
 import {DropDownMenuComponent} from './shared/drop-down-menu/drop-down-menu.component';
 import {ZoneSearchComponent} from './shared/zone-search/zone-search.component';
+import {LeafletMarkerClusterModule} from '@asymmetrik/ngx-leaflet-markercluster';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {ZoneSearchComponent} from './shared/zone-search/zone-search.component';
     StoreModule.forRoot({}),
     StoreModule.forFeature('institutions', fromMap.mapReducer),
     EffectsModule.forRoot([MapEffects]),
-    LeafletModule
+    LeafletModule,
+    LeafletMarkerClusterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

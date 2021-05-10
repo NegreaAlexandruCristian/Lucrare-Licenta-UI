@@ -1,18 +1,26 @@
 <div [classList]="enable ? 'fade-in row align-content-center' : 'fade-out row align-content-center'">
   <label>Zone Search Form</label>
-  <form class="form-inline border-class">
+  <form (ngSubmit)="requestZoneLocations()" [formGroup]="zoneLocationsForm" class="form-inline border-class">
     <div class="col">
       <div class="d-inline-block" ngbDropdown>
-        <button class="btn btn-outline-success btn-lg" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
-        <div aria-labelledby="dropdownBasic1" ngbDropdownMenu>
-          <button class="btn-lg" ngbDropdownItem>All Public Locations</button>
-          <button class="btn-lg" ngbDropdownItem>All Medical Locations</button>
-          <button class="btn-lg" ngbDropdownItem>All Transport Locations</button>
-          <button class="btn-lg" ngbDropdownItem>All Locations</button>
-        </div>
+        <select class="form-control btn btn-lg badge-success" formControlName="zoneLocations">
+          <option disabled>Select Zone</option>
+          <option>Choose Zone</option>
+          <option *ngFor="let zoneLocation of zoneLocationsType">{{zoneLocation}}</option>
+        </select>
       </div>
     </div>
-    <input class="form-control mb-2 mr-sm-2" id="radius" placeholder="Enter radius.." type="number">
-    <button class="btn  btn-outline-success mb-2" type="submit">Submit</button>
+    <input
+      class="form-control mb-2 mr-sm-2"
+      formControlName="radius"
+      id="radius"
+      placeholder="Enter radius.."
+      type="number"
+    >
+    <button [disabled]="!zoneLocationsForm.valid" class="btn btn-outline-success mb-2" type="submit">Submit</button>
+    <span
+      *ngIf="!zoneLocationsForm.valid && zoneLocationsForm.touched"
+      class="wrong-form help-block text-danger">Please enter valid data!
+    </span>
   </form>
 </div>

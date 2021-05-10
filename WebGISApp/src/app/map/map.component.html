@@ -1,5 +1,5 @@
 <app-error *ngIf="errorMessage!== ''" [errorMessage]="errorMessage"></app-error>
 <div *ngIf="errorMessage === ''" id="map"></div>
-<button (click)="getCurrentLocation()" class="btn btn-outline-success current-location">
+<button (click)="getCurrentLocation()" *ngIf="errorMessage === ''" class="btn btn-outline-success current-location">
   <img alt="Current Locations" src="/assets/current-location-icon.png">
 </button>

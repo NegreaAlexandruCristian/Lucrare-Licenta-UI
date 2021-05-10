@@ -7,12 +7,19 @@ export interface State {
   institutions: Institution[];
   institutionType: string;
   point: Point;
+  currentLocation: number[];
+  institutionName: string;
+  errorMessage: string;
+
 }
 
 const initialState: State = {
   institutions: [],
   institutionType: '',
   point: new Point('', 0, 0, 0),
+  currentLocation: [],
+  institutionName: '',
+  errorMessage: ''
 };
 
 // tslint:disable-next-line:variable-name
@@ -25,6 +32,20 @@ const _mapReducer = createReducer(
       institutions: [...action.institutions],
       institutionType: action.institutionType,
       point: action.point,
+    })
+  ),
+  on(
+    MapActions.setCurrentLocation,
+    (state, action) => ({
+      ...state,
+      currentLocation: action.currentLocation
+    })
+  ),
+  on(
+    MapActions.searchFailed,
+    (state, action) => ({
+      ...state,
+      errorMessage: action.errorMessage
     })
   )
 );

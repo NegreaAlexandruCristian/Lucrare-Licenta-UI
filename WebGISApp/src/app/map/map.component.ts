@@ -4,7 +4,9 @@ import {Store} from '@ngrx/store';
 import * as L from 'leaflet';
 import * as Utils from '../utils/configuration';
 import * as fromApp from '../store/app.reducer';
+import * as MapActions from '../map/store/map.actions';
 import {Institution} from '../models/Institution.model';
+
 
 @Component({
   selector: 'app-map',
@@ -60,14 +62,20 @@ export class MapComponent implements OnInit {
     }
     this.store.select('institutions').subscribe(
       (data) => {
-        this.deleteMarkersFromMap();
-        data.institutions.forEach(
-          institution => {
-            this.addMarker(institution);
-            this.map.addLayer(this.markers);
+        if (data.institutions.length > 0) {
+          this.deleteMarkersFromMap();
+          data.institutions.forEach(
+            institution => {
+              this.addMarker(institution);
+              this.map.addLayer(this.markers);
+            }
+          );
+          try {
+            this.map?.fitBounds(this.markersPositions);
+          } catch (error) {
+            console.log(error);
           }
-        );
-        this.map?.fitBounds(this.markersPositions);
+        }
       }
     );
   }
@@ -80,7 +88,7 @@ export class MapComponent implements OnInit {
       duration: 1000
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    L.tileLayer(Utils.LEAFLET_MAP_URL, {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors'
     }).addTo(this.map);
 
@@ -97,6 +105,10 @@ export class MapComponent implements OnInit {
         'Here I am 😀!'
       )
       .openPopup();
+    const currentLoc = [this.currentPositionMarker.getLatLng().lat, this.currentPositionMarker.getLatLng().lng];
+    this.store.dispatch(
+      MapActions.setCurrentLocation({currentLocation: currentLoc})
+    );
   }
 
   getCurrentLocation(): void {
@@ -110,6 +122,10 @@ export class MapComponent implements OnInit {
         this.handleError.bind(this)
       );
     }
+    const currentLoc = [this.currentPositionMarker.getLatLng().lat, this.currentPositionMarker.getLatLng().lng];
+    this.store.dispatch(
+      MapActions.setCurrentLocation({currentLocation: currentLoc})
+    );
   }
 
   private addMarker(institution: Institution): void {

@@ -1,0 +1,14 @@
+.container-fluid {
+  /*margin-left: 120%;*/
+  /*margin-top: 70%;*/
+  flex: 1;
+  height: 100%;
+  min-width: 100rem;
+  width: auto;
+  background-color: var(--color-dark--1);
+  border-left: 2px solid green;
+}
+
+.page-wrap {
+  min-height: 100vh;
+}

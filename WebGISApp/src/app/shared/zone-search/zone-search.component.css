@@ -27,3 +27,10 @@ label {
   opacity: 1;
 }
 
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.wrong-form {
+  margin: 10px 0 0 15px;
+}

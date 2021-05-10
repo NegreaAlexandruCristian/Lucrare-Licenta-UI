@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {FormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {MapComponent} from './map/map.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {ErrorComponent} from './error/error.component';
@@ -18,6 +18,7 @@ import * as fromMap from '../app/map/store/map.reducer';
 import {DropDownMenuComponent} from './shared/drop-down-menu/drop-down-menu.component';
 import {ZoneSearchComponent} from './shared/zone-search/zone-search.component';
 import {LeafletMarkerClusterModule} from '@asymmetrik/ngx-leaflet-markercluster';
+import {ErrorPageComponent} from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +27,11 @@ import {LeafletMarkerClusterModule} from '@asymmetrik/ngx-leaflet-markercluster'
     ErrorComponent,
     SearchBarComponent,
     DropDownMenuComponent,
-    ZoneSearchComponent
+    ZoneSearchComponent,
+    ErrorPageComponent
   ],
   imports: [
-    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     NgbModule,
     HttpClientModule,

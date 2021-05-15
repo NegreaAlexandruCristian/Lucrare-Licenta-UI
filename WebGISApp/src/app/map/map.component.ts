@@ -25,14 +25,6 @@ export class MapComponent implements OnInit {
   private currentPositionMarker: any;
   private markers = L.markerClusterGroup();
   private markersPositions: Array<Array<number>> = [[]];
-  defaultIcon = L.Icon.extend({
-    options: {
-      iconSize: [26, 42],
-      iconRetinaUrl: this.iconRetinaUrl,
-      iconUrl: this.iconUrl,
-      shadowUrl: this.shadowUrl,
-    }
-  });
   private calculateDistanceMarkers: any = [];
 
   private iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -42,6 +34,16 @@ export class MapComponent implements OnInit {
   private routingCalculator: any;
   private redIconUrl = 'assets/marker-icon-red.png';
   private redIconRetinaUrl = 'assets/marker-icon-2x-red.png';
+
+  defaultIcon = L.Icon.extend({
+    options: {
+      iconSize: [26, 42],
+      iconRetinaUrl: this.iconRetinaUrl,
+      iconUrl: this.iconUrl,
+      shadowUrl: this.shadowUrl,
+    }
+  });
+
   markerSelectedIcon = L.Icon.extend({
     options: {
       iconSize: [26, 42],

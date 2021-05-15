@@ -6,3 +6,9 @@
 .zone-search {
   padding-right: 35px;
 }
+
+@media (max-width: 768px) {
+  .zone-search {
+    padding-right: 62%;
+  }
+}

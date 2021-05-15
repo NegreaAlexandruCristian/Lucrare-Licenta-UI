@@ -2,10 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as MapActions from './map.actions';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import * as fromApp from '../../store/app.reducer';
+import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {Institution} from '../../models/Institution.model';
 import {Point} from '../../models/Point.model';
 import {of} from 'rxjs';
+import {Store} from '@ngrx/store';
 
 function getInstitutionType(code: string): string {
   switch (code) {
@@ -23,6 +25,7 @@ function getInstitutionType(code: string): string {
 }
 
 const handleError = (errorRes: any) => {
+  console.log(errorRes);
   let errorMessage = 'An unknown error occurred!';
   if (!errorRes.error) {
     return of(MapActions.searchFailed({errorMessage}));
@@ -40,24 +43,31 @@ export class MapEffects {
 
   private point = new Point('', 0, 0, 0);
 
-  constructor(
-    private actions$: Actions,
-    private http: HttpClient,
-  ) {
-  }
-
   searchInstitutionByName = createEffect(
     () => this.actions$.pipe(
       ofType(MapActions.searchInstitution),
-      switchMap((action) => {
+      withLatestFrom(this.store.select('institutions')),
+      switchMap(([action, institutionState]) => {
         return this.http.get<Institution>(
           `http://localhost:8662/api/user/location/get/name/${action.institutionName}`
         ).pipe(
           map(institution => {
+            const indexInstitution = institutionState.institutions.findIndex((value) => value.name === action.institutionName);
+
+            let newInstitutions: Institution[];
+            if (indexInstitution) {
+              const foundInstitution = institutionState.institutions[indexInstitution];
+              newInstitutions = [foundInstitution];
+              const tempArray = institutionState.institutions.filter(value => value.name !== action.institutionName);
+              newInstitutions.push(...tempArray);
+            } else {
+              newInstitutions = [institution];
+              newInstitutions.push(...institutionState.institutions);
+            }
             return MapActions.setInstitutions(
               {
-                // @ts-ignore
-                institutions: [institution],
+                institutionName: action.institutionName,
+                institutions: newInstitutions,
                 // @ts-ignore
                 institutionType: getInstitutionType(institution.code),
                 point: this.point,
@@ -70,7 +80,6 @@ export class MapEffects {
       })
     )
   );
-
   getZoneInstitutions = createEffect(() =>
     this.actions$.pipe(
       ofType(MapActions.zoneLocations),
@@ -94,13 +103,13 @@ export class MapEffects {
         return MapActions.setInstitutions(
           {
             institutions,
+            institutionName: '',
             institutionType: getInstitutionType(this.point.code),
             point: this.point
           });
       })
     )
   );
-
   getInstitutions = createEffect(() =>
     this.actions$.pipe(
       ofType(MapActions.getInstitutions),
@@ -120,10 +129,18 @@ export class MapEffects {
         return MapActions.setInstitutions(
           {
             institutions,
+            institutionName: '',
             institutionType: getInstitutionType(institutions[0].code),
             point: this.point,
           });
       })
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private http: HttpClient,
+    private store: Store<fromApp.AppState>
+  ) {
+  }
 }

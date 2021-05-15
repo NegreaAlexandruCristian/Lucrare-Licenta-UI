@@ -41,6 +41,7 @@ export const setInstitutions = createAction(
   '[Map] Set Institutions',
   props<{
     institutions: Institution[];
+    institutionName: string;
     institutionType: string;
     point: Point;
   }>()

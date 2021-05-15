@@ -30,6 +30,7 @@ const _mapReducer = createReducer(
     (state, action) => ({
       ...state,
       institutions: [...action.institutions],
+      institutionName: action.institutionName,
       institutionType: action.institutionType,
       point: action.point,
     })

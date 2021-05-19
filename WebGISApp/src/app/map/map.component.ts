@@ -38,6 +38,7 @@ export class MapComponent implements OnInit {
   defaultIcon = L.Icon.extend({
     options: {
       iconSize: [26, 42],
+      iconAnchor: [13, 26],
       iconRetinaUrl: this.iconRetinaUrl,
       iconUrl: this.iconUrl,
       shadowUrl: this.shadowUrl,
@@ -47,6 +48,7 @@ export class MapComponent implements OnInit {
   markerSelectedIcon = L.Icon.extend({
     options: {
       iconSize: [26, 42],
+      iconAnchor: [13, 26],
       iconRetinaUrl: this.redIconRetinaUrl,
       iconUrl: this.redIconUrl,
       shadowUrl: this.shadowUrl,
@@ -67,6 +69,7 @@ export class MapComponent implements OnInit {
       }
       this.markers.clearLayers();
     }
+    this.markersPositions = [];
   }
 
   ngOnInit(): void {
@@ -84,6 +87,8 @@ export class MapComponent implements OnInit {
             institution => {
               if (this.routingCalculator) {
                 this.map.removeControl(this.routingCalculator);
+                this.calculateDistanceMarkers = [];
+                this.routingMachineEnabled = false;
               }
               this.addMarker(institution);
               this.map.addLayer(this.markers);
@@ -194,7 +199,6 @@ export class MapComponent implements OnInit {
 
     const {lat: startLat, lng: startLng} = this.calculateDistanceMarkers[0]._latlng;
     const {lat: stopLat, lng: stopLng} = this.calculateDistanceMarkers[1]._latlng;
-    console.log(this.calculateDistanceMarkers[1]._popup._content);
 
     this.routingCalculator = L.Routing.control({
       router: L.Routing.mapbox(Utils.MAP_BOX_API_KEY, {}),
@@ -206,6 +210,7 @@ export class MapComponent implements OnInit {
         L.latLng(startLat, startLng),
         L.latLng(stopLat, stopLng)
       ],
+
       createMarker(): any {
         return null;
       },

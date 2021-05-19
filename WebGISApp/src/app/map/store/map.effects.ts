@@ -55,7 +55,7 @@ export class MapEffects {
             const indexInstitution = institutionState.institutions.findIndex((value) => value.name === action.institutionName);
 
             let newInstitutions: Institution[];
-            if (indexInstitution) {
+            if (indexInstitution !== -1) {
               const foundInstitution = institutionState.institutions[indexInstitution];
               newInstitutions = [foundInstitution];
               const tempArray = institutionState.institutions.filter(value => value.name !== action.institutionName);

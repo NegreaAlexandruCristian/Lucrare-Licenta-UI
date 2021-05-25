@@ -1,0 +1,45 @@
+.row {
+  margin-top: 0;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.border-class {
+  border: 3px green solid;
+  border-radius: 20px;
+  margin: 0 40px 40px 40px;
+  padding: 20px;
+}
+
+label {
+  color: green;
+  font-size: 15px;
+  padding-top: 20px;
+  padding-left: 50px;
+}
+
+.fade-out {
+  transition: opacity 0.6s ease-out;
+  opacity: 0;
+}
+
+.fade-in {
+  transition: opacity 0.6s ease-in;
+  opacity: 1;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.wrong-form {
+  margin: 10px 0 0 15px;
+}
+
+.latitude {
+  margin-left: 10px;
+}
+
+.zone-locations-type {
+  padding-right: 0;
+}

@@ -19,6 +19,7 @@ import {DropDownMenuComponent} from './shared/drop-down-menu/drop-down-menu.comp
 import {ZoneSearchComponent} from './shared/zone-search/zone-search.component';
 import {LeafletMarkerClusterModule} from '@asymmetrik/ngx-leaflet-markercluster';
 import {ErrorPageComponent} from './error-page/error-page.component';
+import {ZoneSearchGeoToolsComponent} from './shared/zone-search-geo-tools/zone-search-geo-tools.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {ErrorPageComponent} from './error-page/error-page.component';
     SearchBarComponent,
     DropDownMenuComponent,
     ZoneSearchComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    ZoneSearchGeoToolsComponent
   ],
   imports: [
     ReactiveFormsModule,

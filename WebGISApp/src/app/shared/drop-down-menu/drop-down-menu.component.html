@@ -11,9 +11,19 @@
       </div>
     </div>
   </div>
-  <div class="col text-right zone-search">
-    <div class="d-inline-block">
-      <button (click)="enableZoneSearch()" class="btn btn-outline-success btn-lg">Zone Search</button>
+  <!--  <div class="col text-right zone-search">-->
+  <!--    <div class="d-inline-block">-->
+  <!--      <button (click)="enableZoneSearch()" class="btn btn-outline-success btn-lg">Zone Search</button>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="d-inline-block zone-search" ngbDropdown>
+    <button class="col text-right btn btn-outline-success btn-lg" id="dropdownBasic2" ngbDropdownToggle>Zone Search
+    </button>
+    <div aria-labelledby="dropdownBasic2" ngbDropdownMenu>
+      <div class="d-inline-block">
+        <button (click)="enableZoneSearch('normal')" class="btn-lg" ngbDropdownItem>Zone Search</button>
+        <button (click)="enableZoneSearch('geo-tools')" class="btn-lg" ngbDropdownItem>Zone Search Geo Tools</button>
+      </div>
     </div>
   </div>
 </div>

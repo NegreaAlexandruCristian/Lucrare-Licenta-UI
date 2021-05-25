@@ -30,6 +30,13 @@ export const zoneLocations = createAction(
   }>()
 );
 
+export const zoneLocationsGeoTools = createAction(
+  '[Map] Get Zone Locations Geo-Tools',
+  props<{
+    point: Point;
+  }>()
+);
+
 export const setCurrentLocation = createAction(
   '[Map] Get Current Location',
   props<{

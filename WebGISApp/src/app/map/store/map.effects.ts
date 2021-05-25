@@ -110,6 +110,36 @@ export class MapEffects {
       })
     )
   );
+  getZoneInstitutionsGeoTools = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MapActions.zoneLocationsGeoTools),
+      switchMap((action) => {
+        this.point = action.point;
+        return this.http.post<Institution[]>(
+          `http://localhost:8662/api/geo-tools/user/location/${
+            action.point.code !== 'all' ? 'zone' : 'all'
+          }`,
+          action.point
+        );
+      }),
+      map((institutions) => {
+        return institutions.map(institution => {
+          return {
+            ...institution
+          };
+        });
+      }),
+      map(institutions => {
+        return MapActions.setInstitutions(
+          {
+            institutions,
+            institutionName: '',
+            institutionType: getInstitutionType(this.point.code),
+            point: this.point
+          });
+      })
+    )
+  );
   getInstitutions = createEffect(() =>
     this.actions$.pipe(
       ofType(MapActions.getInstitutions),

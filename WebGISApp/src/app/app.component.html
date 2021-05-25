@@ -5,7 +5,9 @@
     <ul class="workouts">
       <app-search-bar></app-search-bar>
       <app-drop-down-menu></app-drop-down-menu>
-      <app-zone-search></app-zone-search>
+      <app-zone-search [ngStyle]="{'display':zoneType === 'normal' ? 'inline-block' : 'none' }"></app-zone-search>
+      <app-zone-search-geo-tools
+        [ngStyle]="{'display':zoneType === 'geo-tools' ? 'inline-block' : 'none'}"></app-zone-search-geo-tools>
     </ul>
 
     <p class="copyright">

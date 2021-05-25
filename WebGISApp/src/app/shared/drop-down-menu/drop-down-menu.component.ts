@@ -12,8 +12,6 @@ import {ZoneSearchService} from '../../utils/zone-search.service';
 })
 export class DropDownMenuComponent implements OnInit {
 
-  zoneSearch = false;
-
   constructor(
     private store: Store<fromApp.AppState>,
     private zoneSearchService: ZoneSearchService
@@ -29,8 +27,7 @@ export class DropDownMenuComponent implements OnInit {
     );
   }
 
-  enableZoneSearch(): void {
-    this.zoneSearch = !this.zoneSearch;
-    this.zoneSearchService.activatedEmitter.next(this.zoneSearch);
+  enableZoneSearch(zoneSearchType: string): void {
+    this.zoneSearchService.activatedZoneSearchTypeEmitter.next(zoneSearchType);
   }
 }

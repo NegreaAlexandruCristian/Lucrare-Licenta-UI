@@ -8,6 +8,8 @@ import * as Utils from '../utils/configuration';
 import * as fromApp from '../store/app.reducer';
 import * as MapActions from '../map/store/map.actions';
 import {Institution} from '../models/Institution.model';
+import {ZoneSearchService} from '../utils/zone-search.service';
+import {CoordinatesModel} from '../models/Coordinates.model';
 
 @Component({
   selector: 'app-map',
@@ -38,7 +40,7 @@ export class MapComponent implements OnInit {
   defaultIcon = L.Icon.extend({
     options: {
       iconSize: [26, 42],
-      iconAnchor: [13, 26],
+      iconAnchor: [13, 13],
       iconRetinaUrl: this.iconRetinaUrl,
       iconUrl: this.iconUrl,
       shadowUrl: this.shadowUrl,
@@ -48,14 +50,17 @@ export class MapComponent implements OnInit {
   markerSelectedIcon = L.Icon.extend({
     options: {
       iconSize: [26, 42],
-      iconAnchor: [13, 26],
+      iconAnchor: [13, 13],
       iconRetinaUrl: this.redIconRetinaUrl,
       iconUrl: this.redIconUrl,
       shadowUrl: this.shadowUrl,
     }
   });
 
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor(
+    private store: Store<fromApp.AppState>,
+    private zoneSearchService: ZoneSearchService
+  ) {
   }
 
   handleError(error: any): void {
@@ -116,6 +121,12 @@ export class MapComponent implements OnInit {
       animate: true,
       duration: 1000
     });
+    this.map.on('click', (event: { latlng: any; }) => {
+      const {lat: markerLatitude, lng: markerLongitude} = event.latlng;
+      const coords = new CoordinatesModel(markerLatitude, markerLongitude);
+      this.zoneSearchService.sendMapCoordinates.next(coords);
+      console.log(markerLatitude, markerLongitude);
+    });
 
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: this.iconRetinaUrl,
@@ -140,7 +151,14 @@ export class MapComponent implements OnInit {
       .setPopupContent(
         'Here I am 😀!'
       )
-      .openPopup();
+      .openPopup()
+      .on('mouseover', (event) => {
+        event.target.openPopup();
+      })
+      .on('mouseout', (event) => {
+        event.target.closePopup();
+      })
+      .on('click', this.markerAction.bind(this));
     const currentLoc = [this.currentPositionMarker.getLatLng().lat, this.currentPositionMarker.getLatLng().lng];
     this.store.dispatch(
       MapActions.setCurrentLocation({currentLocation: currentLoc})
@@ -172,7 +190,9 @@ export class MapComponent implements OnInit {
       // tslint:disable-next-line:new-parens
       event.target.setIcon(new this.defaultIcon);
       this.calculateDistanceMarkers.splice(index, 1);
-      this.map.removeControl(this.routingCalculator);
+      if (this.routingCalculator !== undefined) {
+        this.map.removeControl(this.routingCalculator);
+      }
       this.routingMachineEnabled = false;
     } else {
       switch (markersClicked) {

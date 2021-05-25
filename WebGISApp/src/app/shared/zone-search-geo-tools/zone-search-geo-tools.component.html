@@ -1,0 +1,42 @@
+<div [classList]="enable ? 'fade-in row align-content-center' : 'fade-out row align-content-center'">
+  <label>Zone Search Form</label>
+  <form (ngSubmit)="requestZoneLocationsGeoTools()" [formGroup]="zoneLocationsForm" class="form-inline border-class">
+    <div class="col zone-locations-type">
+      <div class="d-inline-block" ngbDropdown>
+        <select class="form-control btn btn-lg badge-success" formControlName="zoneLocations">
+          <option disabled>Select Zone</option>
+          <option>Choose Zone</option>
+          <option *ngFor="let zoneLocation of zoneLocationsType">{{zoneLocation}}</option>
+        </select>
+      </div>
+    </div>
+    <input
+      class="form-control mb-2 mr-sm-2"
+      formControlName="radius"
+      id="radius"
+      placeholder="Enter radius.."
+      type="number"
+    >
+    <button [disabled]="!zoneLocationsForm.valid" class="btn btn-outline-success mb-2" type="submit">Submit</button>
+    <div class="row">
+      <input
+        class="form-control mb-2 mr-sm-2 latitude"
+        formControlName="latitude"
+        id="latitude"
+        placeholder="Enter latitude.."
+        type="number"
+      >
+      <input
+        class="form-control mb-2 mr-sm-2 longitude"
+        formControlName="longitude"
+        id="longitude"
+        placeholder="Enter longitude.."
+        type="number"
+      >
+    </div>
+    <span
+      *ngIf="!zoneLocationsForm.valid && zoneLocationsForm.touched"
+      class="wrong-form help-block text-danger">Please enter valid data!
+    </span>
+  </form>
+</div>

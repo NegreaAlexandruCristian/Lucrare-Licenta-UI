@@ -125,7 +125,6 @@ export class MapComponent implements OnInit {
       const {lat: markerLatitude, lng: markerLongitude} = event.latlng;
       const coords = new CoordinatesModel(markerLatitude, markerLongitude);
       this.zoneSearchService.sendMapCoordinates.next(coords);
-      console.log(markerLatitude, markerLongitude);
     });
 
     L.Icon.Default.mergeOptions({

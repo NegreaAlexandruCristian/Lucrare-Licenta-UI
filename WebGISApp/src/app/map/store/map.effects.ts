@@ -3,11 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as MapActions from './map.actions';
 import * as fromApp from '../../store/app.reducer';
+import * as Utils from '../../utils/configuration';
 import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {Institution} from '../../models/Institution.model';
 import {Point} from '../../models/Point.model';
 import {of} from 'rxjs';
 import {Store} from '@ngrx/store';
+
 
 function getInstitutionType(code: string): string {
   switch (code) {
@@ -49,7 +51,7 @@ export class MapEffects {
       withLatestFrom(this.store.select('institutions')),
       switchMap(([action, institutionState]) => {
         return this.http.get<Institution>(
-          `http://localhost:8662/api/user/location/get/name/${action.institutionName}`
+          `${Utils.BACKEND_URL}:8662/api/user/location/get/name/${action.institutionName}`
         ).pipe(
           map(institution => {
             const indexInstitution = institutionState.institutions.findIndex((value) => value.name === action.institutionName);
@@ -85,8 +87,9 @@ export class MapEffects {
       ofType(MapActions.zoneLocations),
       switchMap((action) => {
         this.point = action.point;
+
         return this.http.post<Institution[]>(
-          `http://localhost:8662/api/user/location/${
+          `${Utils.BACKEND_URL}:8662/api/user/location/${
             action.point.code !== 'all' ? 'zone' : 'all'
           }`,
           action.point
@@ -116,7 +119,7 @@ export class MapEffects {
       switchMap((action) => {
         this.point = action.point;
         return this.http.post<Institution[]>(
-          `http://localhost:8662/api/geo-tools/user/location/${
+          `${Utils.BACKEND_URL}:8662/api/geo-tools/user/location/${
             action.point.code !== 'all' ? 'zone' : 'all'
           }`,
           action.point
@@ -145,7 +148,7 @@ export class MapEffects {
       ofType(MapActions.getInstitutions),
       switchMap((action) => {
         return this.http.get<Institution[]>(
-          `http://localhost:8662/api/${action.institutionType}/locations/get`
+          `${Utils.BACKEND_URL}:8662/api/${action.institutionType}/locations/get`
         );
       }),
       map((institutions) => {

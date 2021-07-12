@@ -51,8 +51,9 @@ export class ZoneSearchComponent implements OnInit, OnDestroy {
   requestZoneLocations(): void {
     const value = this.zoneLocationsForm.value;
     this.currentLoc = this.store.select('institutions').subscribe(
-      () => {
-        const point = new Point(value.zoneLocations.toLowerCase(), value.radius, 45.77045822363855, 21.21882227116396);
+      (data) => {
+        console.log(data);
+        const point = new Point(value.zoneLocations.toLowerCase(), value.radius, data.currentLocation[0], data.currentLocation[1]);
         this.store.dispatch(
           MapActions.zoneLocations({point})
         );
